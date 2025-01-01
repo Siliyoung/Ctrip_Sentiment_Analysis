@@ -103,8 +103,8 @@ def process_all_files(input_dir, output_dir):
             process_file(file_path, output_dir, scenic_area)
 
 # 指定输入目录和输出目录
-input_directory = 'data\processed_data'
-output_directory = 'data\roberta_results'
+input_directory = 'data\\precessed_data'
+output_directory = 'data\\roberta_results'
 
 # 执行批量处理
 process_all_files(input_directory, output_directory)

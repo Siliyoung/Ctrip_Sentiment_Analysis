@@ -1,10 +1,11 @@
 import os
 import pandas as pd
 import re
+import csv  # 引入 csv 模块
 
 # === 配置参数 ===
-data_dir = "data\comment_data"  # 原始数据目录
-output_dir = "data\precessed_data"  # 处理后保存的目录
+data_dir = "data\\comment_data"  # 原始数据目录
+output_dir = "data\\precessed_data"  # 处理后保存的目录
 min_reviews = 100  # 每个景区最少评论数量
 max_total_reviews = 60000  # 总评论数量上限
 allowable_excess = 3000  # 允许的超出数据量
@@ -31,22 +32,9 @@ print(f"原始数据总量: {len(data)} 条")
 
 # === Step 2: 数据清理和预处理函数 ===
 def preprocess_review(review):
-    # 去除表情符号（确保不影响正常文字）
-    # review = re.sub(r'[\U0001F600-\U0001F64F'
-    #                 r'\U0001F300-\U0001F5FF'
-    #                 r'\U0001F680-\U0001F6FF'
-    #                 r'\U0001F700-\U0001F77F'
-    #                 r'\U0001F780-\U0001F7FF'
-    #                 r'\U0001F800-\U0001F8FF'
-    #                 r'\U0001F900-\U0001F9FF'
-    #                 r'\U0001FA00-\U0001FA6F'
-    #                 r'\U0001FA70-\U0001FAFF'
-    #                 r'\U00002702-\U000027B0'
-    #                 r'\U000024C2-\U0001F251]', '', review)
     # 去除多余空格
     review = review.strip()
     return review
-
 
 data["comments"] = data["comments"].apply(preprocess_review)
 
@@ -92,9 +80,9 @@ for scenic_spot in final_data["scenic_spot"].unique():
     # 格式化数据为目标样式
     formatted_data = spot_data[["评分", "comments"]]
     
-    # 保存为文件
+    # 保存为文件，确保所有字段用双引号括起来
     file_name = f"result_{scenic_spot}.csv"
-    formatted_data.to_csv(os.path.join(output_dir, file_name), index=False)
+    formatted_data.to_csv(os.path.join(output_dir, file_name), index=False, quoting=csv.QUOTE_ALL)
 
 # === Step 7: 保存附加信息 ===
 info_message = "\n".join([f"景区: {scenic_spot}, 地址: {filtered_data[filtered_data['scenic_spot'] == scenic_spot]['address'].iloc[0]}, 数据量: {count}"
