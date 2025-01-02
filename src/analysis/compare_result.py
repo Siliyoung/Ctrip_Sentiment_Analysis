@@ -6,8 +6,8 @@ from collections import Counter
 
 ## 1. 加载数据并合并两种方法的结果
 # 加载两种情感分析结果
-snow_df = pd.read_csv('data/snownlp_result/result_scenic_spot.csv')  # SnowNLP方法结果
-roberta_df = pd.read_csv('data/roberta_result/result_scenic_spot.csv')  # RoBERTa方法结果
+snow_df = pd.read_csv('data/snownlp_result/result_遇龙河景区.csv')  # SnowNLP方法结果
+roberta_df = pd.read_csv('data/roberta_results/sentiment_遇龙河景区.csv')  # RoBERTa方法结果
 
 # 合并两种方法的结果
 merged_df = pd.merge(snow_df[['score', 'sentiment_category', 'sentiment_score', 'comment']], 
@@ -18,7 +18,7 @@ merged_df = pd.merge(snow_df[['score', 'sentiment_category', 'sentiment_score', 
 # 检查合并后的数据
 print(merged_df.head())
 
-## 2. 计算每种情感分析方法的情感分类分布（正面、负面
+## 2. 计算每种情感分析方法的情感分类分布（正面、负面）
 # 统计情感分析结果
 snow_sentiment_counts = merged_df['sentiment_category_snow'].value_counts()
 roberta_sentiment_counts = merged_df['sentiment_category_roberta'].value_counts()
