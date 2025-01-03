@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import os
 import jieba  # 中文分词库
+from collections import Counter
+
 
 
 # 1. 读取 final_data_info.txt 文件获取景区信息
@@ -78,18 +80,16 @@ def generate_wordcloud(text, scenic_spot, output_dir):
     text_cut = jieba.cut(' '.join(text))  # 对文本进行分词
     filtered_text = [word for word in text_cut if word not in stop_words and len(word.strip()) > 1]  # 去掉停用词和单字符的词
 
-    # 将过滤后的词语合并成一个字符串
-    text_cut = ' '.join(filtered_text)
+    # 统计每个词的出现频率
+    word_counts = Counter(filtered_text)
 
-    # 尝试使用系统自带的中文字体
-    font_path = 'C:\\Windows\\Fonts\\msyh.ttc'  # 微软雅黑字体
-
+    # 使用wordcloud的generate_from_frequencies方法生成词云
     wordcloud = WordCloud(
         width=800,
         height=400,
         background_color='white',
-        font_path=font_path  # 微软雅黑字体
-    ).generate(text_cut)
+        font_path='C:\\Windows\\Fonts\\msyh.ttc'  # 微软雅黑字体
+    ).generate_from_frequencies(word_counts)  # 使用词频来生成词云
     
     plt.figure(figsize=(12, 8))
     plt.imshow(wordcloud, interpolation='bilinear')
