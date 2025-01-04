@@ -3,7 +3,7 @@ import pandas as pd
 from transformers import pipeline, AutoTokenizer
 from tqdm import tqdm
 import traceback
-
+## roberta_sentiment.py##
 # 设置模型路径
 model_path = os.path.join("models", "roberta-base-finetuned-dianping-chinese")
 

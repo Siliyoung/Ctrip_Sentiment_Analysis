@@ -140,7 +140,6 @@ def main():
     
     # 分析并绘制图表
     analyze_and_plot(scenic_spots_info, snow_dir, roberta_dir, output_dir)
-
 # 执行主程序
 if __name__ == '__main__':
     main()
